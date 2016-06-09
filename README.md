@@ -112,6 +112,7 @@ const ParentContainer = () => {
 ### 3. Integrate With Backend Service
 Redux Bug Reporter needs to be able to submit bugs to some sort of backend. An example implementation of a backend is coming soon. If a backend service doesn't exist, a temporary solution to try Redux Bug Reporter is to log bugs to the console instead of submitting them.
 
+TODO: Update these docs to use console integration
 ```js
 const submitFn = (newBug) => {
   return new Promise((resolve, reject) => {
@@ -125,7 +126,7 @@ const submitFn = (newBug) => {
 }
 
 // Later, in render
-<ReduxBugReporter submit={submitFn} projectName='example' stringifyPayload/>
+<ReduxBugReporter submit={submitFn} projectName='example'/>
 ```
 
 Alternatively, Redux Bug Reporter integrates quite easily with [Sheetsu](http://sheetsu.com). Example documentation to come.
@@ -147,7 +148,6 @@ The delay parameter is the amount of time (in ms) between actions during playbac
 |redactStoreState |Function                    |         |*optional* A function that receives the state and returns a redacted state before bug submission. **Warning: Should not alter passed in state** See [Redacting Sensitive Data](#redacting-sensitive-data)|
 |name             |String                      |         |*optional* If the application knows the name of the user, this can be used to prepopulate the submission form|
 |meta             |Any                         |         |*optional* If `meta` exists, it will be passed along on bug submission|
-|stringifyPayload |Boolean                     |false    | If true, the redux states and actions will be stringified using `JSON.stringify` before bug submission. This is particularly useful for posting bugs to a google sheet using [Sheetsu](http://sheetsu.com)|
 
 ## Redacting Sensitive Data
 Since Redux Bug Reporter logs all redux state and actions, there could easily be sensitive information in submitted bugs. There are two ways to redact information before submission.
