@@ -50,6 +50,9 @@ Bug submitted through https://github.com/dtschust/redux-bug-reporter
         }
       })
     }).then(function (response) {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
       return response.json()
     })
   }

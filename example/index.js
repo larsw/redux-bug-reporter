@@ -8,8 +8,8 @@ import './index.less'
 import App from './todomvc/containers/App'
 import configureStore from './todomvc/store/configureStore'
 import 'todomvc-app-css/index.css'
-import submitFn from '../src/integrations/console'
-
+import createSubmit from '../src/integrations/default'
+let submitFn = createSubmit({ url: 'http://localhost:3001' })
 const store = configureStore()
 
 function inputChange (payload) {

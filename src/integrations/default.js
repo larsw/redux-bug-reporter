@@ -11,6 +11,9 @@ const createSubmit = ({url}) => {
       },
       body: JSON.stringify(newBug)
     }).then(function (response) {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
       return response.json()
     })
   }
