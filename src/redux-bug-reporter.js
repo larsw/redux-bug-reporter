@@ -30,6 +30,8 @@ if (isClientRender()) {
       name: React.PropTypes.string,
       meta: React.PropTypes.any,
       stringifyPayload: React.PropTypes.bool,
+      customEncode: React.PropTypes.func,
+      customDecode: React.PropTypes.func,
       // Passed in by redux-bug-reporter
       dispatch: React.PropTypes.func.isRequired,
       storeState: React.PropTypes.any.isRequired,
@@ -74,7 +76,7 @@ if (isClientRender()) {
     },
 
     bugReporterPlayback: function (actions, initialState, finalState, delay = 100) {
-      let { dispatch, overloadStore } = this.props
+      let { dispatch, overloadStore, customDecode } = this.props
       if (delay === -1) {
         // Do not playback, just jump to the final state
         overloadStore(finalState)
@@ -82,6 +84,10 @@ if (isClientRender()) {
       }
 
       this.props.initializePlayback()
+      if (customDecode) {
+        initialState = customDecode(initialState)
+        finalState = customDecode(finalState)
+      }
       overloadStore(initialState)
 
       const performNextAction = () => {
@@ -113,7 +119,7 @@ if (isClientRender()) {
 
     submit: function (e) {
       e.preventDefault()
-      const {submit, projectName, storeState, redactStoreState, meta, stringifyPayload} = this.props
+      const {submit, projectName, storeState, redactStoreState, meta, stringifyPayload, customEncode} = this.props
       let {reporter, description, screenshotURL, notes} = this.state
       this.setState({loading: true})
 
@@ -123,6 +129,11 @@ if (isClientRender()) {
       if (redactStoreState) {
         initialState = redactStoreState(initialState)
         state = redactStoreState(state)
+      }
+
+      if (customEncode) {
+        state = customEncode(state)
+        initialState = customEncode(initialState)
       }
       const newBug = {
         projectName,

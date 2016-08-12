@@ -1,18 +1,17 @@
 import { combineReducers } from 'redux'
-import todos from './todos'
-
-function input (state = { value: 'Change this input, and all changes will be logged', numChanges: 0 }, action) {
-  let newState = state
+// import todos from './todos'
+import { fromJS } from 'immutable'
+function input (state = fromJS({ value: 'Change this input, and all changes will be logged', numChanges: 0 }), action) {
+  // let newState = state
   if (action.type === 'CHANGED_INPUT') {
-    newState = {...newState, value: action.payload}
+    return state.set('value', action.payload)
   } else if (action.type === 'INCREMENT_CHANGE_COUNTER') {
-    newState = {...newState, numChanges: newState.numChanges + 1}
+    return state.update('numChanges', value => value + 1)
   }
 
-  return newState
+  return state
 }
 const rootReducer = combineReducers({
-  todos,
   input
 })
 
