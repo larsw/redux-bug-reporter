@@ -15,9 +15,9 @@
     "publish-gh-pages": "npm run prepublish && ./scripts/publish-gh-pages.js",
     "start": "cross-env NODE_ENV=development webpack-dev-server --hot --inline --progress --colors --config example/webpack.example.config.js",
     "start-static": "npm run build:example && cd example && live-server",
-    "test": "standard && mocha --compilers js:babel-register --recursive --require test/setup.js",
+    "test": "mocha --compilers js:babel-register --recursive --require test/setup.js",
     "test:watch": "npm test -- --watch",
-    "test:cov": "babel-node ./node_modules/.bin/isparta cover _mocha -- --recursive --require test/setup.js"
+    "test:cov": "nyc --reporter=json --reporter=text-summary npm test"
   },
   "repository": {
     "type": "git",
@@ -86,7 +86,6 @@
     "gh-pages": "^0.11.0",
     "ghooks": "^1.0.3",
     "immutable": "^3.8.1",
-    "isparta": "^4.0.0",
     "jsdom": "~5.4.3",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
@@ -94,6 +93,7 @@
     "lodash": "^4.12.0",
     "mocha": "^2.4.5",
     "nock": "^8.0.0",
+    "nyc": "^8.1.0",
     "postcss-loader": "^0.9.1",
     "proxyquire": "^1.7.9",
     "react": ">=0.14.0",
